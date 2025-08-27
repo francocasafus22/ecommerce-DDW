@@ -8,7 +8,7 @@ function FormInput({
   isRequired = true,
 }) {
   return (
-    <div className="flex flex-col text-gray-300 items-start mx-auto w-full max-w-md">
+    <div className="flex flex-col text-gray-300 items-start mx-auto w-full">
       <div className="flex items-center gap-2 mb-1">
         {icon}
         <label className="">{labelText}</label>

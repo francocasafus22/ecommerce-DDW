@@ -6,7 +6,7 @@ function CartButton({ cartItem, isLogin }) {
     return (
       <Link
         to={"/cart"}
-        className="relative text-gray-300 hover:text-emerald-400"
+        className="relative flex items-center  text-gray-300 hover:text-emerald-400"
       >
         <ShoppingCart size={18} className="inline-block mr-1" />
         <span>Cart</span>

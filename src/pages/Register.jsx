@@ -16,7 +16,7 @@ function Register() {
 
   const navigate = useNavigate();
   function navigateToHome() {
-    navigate("/");
+    navigate(-1);
   }
 
   function registerUser(e) {
@@ -27,7 +27,7 @@ function Register() {
 
   return (
     <div className="flex flex-col justify-center py-5 bg-gray-700 min-h-[calc(100vh-64px)]">
-      <div className="rounded-2xl bg-gray-900 w-full mx-auto p-10 max-w-xl">
+      <div className="rounded-2xl bg-gray-900 w-full mx-auto p-10 max-w-sm md:max-w-xl">
         <div>
           <h1 className="text-center text-2xl font-bold  text-emerald-400">
             Register
@@ -107,17 +107,17 @@ function Register() {
               setFormData({ ...formData, dni: e.target.value })
             }
           />
-          <div className="flex flex-row justify-center  gap-5">
+          <div className="flex flex-row justify-center gap-5 mt-2">
             <button
               onClick={navigateToHome}
-              className="text-white bg-gray-700 py-2 px-5 rounded-2xl shadow-2xl hover:bg-gray-800 transition-colors duration-200 cursor-pointer
+              className="text-white bg-gray-700 py-2 px-5 w-full rounded-md shadow-2xl hover:bg-gray-800 transition-colors duration-200 cursor-pointer
 "
             >
               Volver
             </button>
             <button
               type="submit"
-              className="text-white  bg-emerald-700 py-2 px-5 rounded-2xl shadow-2xl hover:bg-emerald-600 transition-colors duration-200 cursor-pointer"
+              className="text-white  bg-emerald-700 py-2 px-5 w-full rounded-md shadow-2xl hover:bg-emerald-600 transition-colors duration-200 cursor-pointer"
             >
               Registarse
             </button>

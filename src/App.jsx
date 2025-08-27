@@ -3,6 +3,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
+import Category from "./pages/Category";
+import Categories from "./pages/Categories";
+import Detalle from "./pages/Detalle";
 import { useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard";
 import Cart from "./pages/Cart";
@@ -45,7 +48,10 @@ function App() {
         />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/category" element={<Categories />} />
+        <Route path="/category/:category" element={<Category />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/product/:id" element={<Detalle />}></Route>
         <Route path="/*" element={<h1>404</h1>} />
       </Routes>
     </>
