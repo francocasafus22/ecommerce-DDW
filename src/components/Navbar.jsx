@@ -15,7 +15,7 @@ function Navbar({ isLogin, isAdmin, logOut, cartItem }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-gray-900 w-full flex items-center gap-4 px-4">
+    <div className="bg-gray-900 w-full flex items-center gap-4 px-4 fixed z-100">
       <div className="w-full flex items-center justify-start gap-4 p-3">
         <Icon />
       </div>

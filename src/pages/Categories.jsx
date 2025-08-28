@@ -16,7 +16,7 @@ function Categories() {
   function handleCategory() {}
 
   return (
-    <div className="relative min-h-screen text-white overflow-hidden bg-gray-700 pt-12">
+    <div className="relative min-h-screen text-white overflow-hidden bg-gray-700 pt-25">
       <div className="relative z-10 mx-auto max-w-7xl px-10">
         <h1 className="text-emerald-400 text-center text-5xl font-bold mb-4">
           Categories

@@ -27,7 +27,7 @@ function Login({ login, loginAsAdmin }) {
   }
 
   return (
-    <div className="flex flex-col justify-center py-5 bg-gray-700 min-h-[calc(100vh-64px)]">
+    <div className="flex flex-col justify-center py-5 bg-gray-700 min-h-screen px-3">
       <div className="rounded-2xl bg-gray-900 w-full mx-auto p-10 max-w-md md:max-w-xl">
         <div>
           <h1 className="text-center text-2xl font-bold  text-emerald-400">
