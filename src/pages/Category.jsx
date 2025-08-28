@@ -22,10 +22,7 @@ function Category() {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl">{category}</h1>
-      {products.length > 0 && <ProductList products={products} />}
-    </div>
+    <div>{products.length > 0 && <ProductList products={products} />}</div>
   );
 }
 

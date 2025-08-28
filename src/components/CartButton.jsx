@@ -1,7 +1,10 @@
 import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
+import useCart from "../hooks/useCart";
 
 function CartButton({ cartItem, isLogin }) {
+  const { getTotalItems } = useCart();
+
   if (isLogin) {
     return (
       <Link
@@ -10,9 +13,9 @@ function CartButton({ cartItem, isLogin }) {
       >
         <ShoppingCart size={18} className="inline-block mr-1" />
         <span>Cart</span>
-        {cartItem > 0 && (
+        {getTotalItems() >= 0 && (
           <span className="absolute -top-2 -left-2 bg-emerald-700 text-white rounded-full px-2 py-0.5 text-xs">
-            {cartItem}
+            {getTotalItems()}
           </span>
         )}
       </Link>

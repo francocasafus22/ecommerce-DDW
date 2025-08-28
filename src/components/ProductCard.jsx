@@ -5,16 +5,26 @@ function ProductCard({ product }) {
   useEffect(() => {
     console.log(product);
   });
+
   return (
-    <div>
+    <div className="bg-gray-900 rounded-lg p-4">
       <Link to={"/product/" + product.id}>
-        <h2>{product.title}</h2>
-        <p>{product.price}</p>
-        <img src={product.image} alt={product.title} />
-        <p>{product.description}</p>
+        <h2 className="text-emerald-400 font-bold text-lg mb-2">
+          {product.title}
+        </h2>
+
+        <img
+          src={"https://placehold.co/600x400"}
+          alt={product.title}
+          className="rounded-lg"
+        />
+
         <div>
-          <p>{product.rating.rate}</p>
-          <p>{product.rating.count}</p>
+          <p className="text-center mt-2 text-emerald-400 font-bold text-lg">
+            {"$" + product.price}
+          </p>
+          <p className="text-gray-200">{"Rating: " + product.rating.rate}</p>
+          <p className="text-gray-200">{"Reseñas: " + product.rating.count}</p>
         </div>
       </Link>
     </div>

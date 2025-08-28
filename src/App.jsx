@@ -9,6 +9,7 @@ import Detalle from "./pages/Detalle";
 import { useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard";
 import Cart from "./pages/Cart";
+import CartProvider from "./hooks/CartProvider";
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -34,26 +35,28 @@ function App() {
 
   return (
     <>
-      <Navbar
-        isLogin={isLogin}
-        isAdmin={isAdmin}
-        logOut={logOut}
-        cartItem={cartItem}
-      />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/login"
-          element={<Login loginAsAdmin={loginAsAdmin} login={login} />}
+      <CartProvider>
+        <Navbar
+          isLogin={isLogin}
+          isAdmin={isAdmin}
+          logOut={logOut}
+          cartItem={cartItem}
         />
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/category" element={<Categories />} />
-        <Route path="/category/:category" element={<Category />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/product/:id" element={<Detalle />}></Route>
-        <Route path="/*" element={<h1>404</h1>} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={<Login loginAsAdmin={loginAsAdmin} login={login} />}
+          />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/category" element={<Categories />} />
+          <Route path="/category/:category" element={<Category />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/product/:id" element={<Detalle />}></Route>
+          <Route path="/*" element={<h1>404</h1>} />
+        </Routes>
+      </CartProvider>
     </>
   );
 }
