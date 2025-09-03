@@ -2,7 +2,7 @@ import ProductCard from "./ProductCard";
 
 function ProductList({ products }) {
   return (
-    <div className="bg-gray-700 min-h-screen px-4 pb-12">
+    <div className="bg-gray-700 min-h-screen px-4 pb-12  pt-17 md:pt-25">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-emerald-400 text-center text-5xl font-bold pt-5">
           Productos

@@ -1,0 +1,34 @@
+import { PlusCircle, ShoppingBasket } from "lucide-react";
+
+const tabs = [
+  {
+    id: 1,
+    label: "Create Product",
+    icon: PlusCircle,
+  },
+  {
+    id: 2,
+    label: "Product List",
+    icon: ShoppingBasket,
+  },
+];
+
+function Tabs({ activeTab, setActiveTab }) {
+  return (
+    <div className={`flex justify-center mb-5 mt-20 md:mt-25`}>
+      {tabs.map((tab) => (
+        <button
+          key={tab.id}
+          onClick={() => setActiveTab(tab.id)}
+          className={`flex items-center px-4 py-2 mx-2 rounded-md ${
+            activeTab == tab.id ? "bg-emerald-400" : "bg-gray-300"
+          }`}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export default Tabs;
