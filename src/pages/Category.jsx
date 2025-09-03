@@ -13,16 +13,25 @@ function Category() {
 
   async function fetchProductsByCategory() {
     if (category) {
-      const response = await fetch(
-        `https://fakestoreapi.com/products/category/${category}`
-      );
+      const response = await fetch(`https://fakestoreapi.com/products`);
       const data = await response.json();
-      setProducts(data);
+      const dataFiltered = data.filter(
+        (product) => product.category == category
+      );
+      setProducts(dataFiltered);
     }
   }
 
   return (
-    <div>{products.length > 0 && <ProductList products={products} />}</div>
+    <div>
+      {products.length > 0 && (
+        <ProductList
+          products={products}
+          title={"Productos"}
+          description={products[0].category}
+        />
+      )}
+    </div>
   );
 }
 

@@ -7,24 +7,29 @@ function ProductCard({ product }) {
   });
 
   return (
-    <div className="bg-gray-900 rounded-lg p-4">
-      <Link to={"/product/" + product.id}>
-        <h2 className="text-emerald-400 font-bold text-lg mb-2">
+    <div className="bg-gray-900 rounded-xl shadow-2xl hover: transform-content hover:scale-105 transition-transform duration-250">
+      <Link
+        to={"/product/" + product.id}
+        className="flex flex-col items-center text-center"
+      >
+        <img
+          src={product.image}
+          alt={product.title}
+          className="w-full  h-[350px] object-contain rounded-t-xl p-5 mb-4 bg-gray-800"
+        />
+        <h2 className="text-emerald-400 px-5 font-extrabold text-lg mb-3 truncate w-full">
           {product.title}
         </h2>
-
-        <img
-          src={"https://placehold.co/600x400"}
-          alt={product.title}
-          className="rounded-lg"
-        />
-
-        <div>
-          <p className="text-center mt-2 text-emerald-400 font-bold text-lg">
+        <div className="flex flex-col items-center gap-1">
+          <p className="text-emerald-400 font-bold text-lg">
             {"$" + product.price}
           </p>
-          <p className="text-gray-200">{"Rating: " + product.rating.rate}</p>
-          <p className="text-gray-200">{"Reseñas: " + product.rating.count}</p>
+          <p className="text-gray-300 text-sm">
+            {"Rating: " + product.rating.rate}
+          </p>
+          <p className="text-gray-300 text-sm mb-5">
+            {"Reseñas: " + product.rating.count}
+          </p>
         </div>
       </Link>
     </div>
