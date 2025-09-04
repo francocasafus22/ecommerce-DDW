@@ -13,21 +13,21 @@ function CartProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart)); // Pasar de objeto JS a JSON
+    console.log(cart);
   }, [cart]);
 
   function addProductCart({ product, quantity }) {
     setCart((prevCart) => {
-      const existItem = prevCart.find((item) => (item.id = product.id));
+      const existItem = prevCart.find((item) => item.id == product.id);
       if (existItem) {
-        return prevCart.map(
-          (item) =>
-            (item.id = product.id
-              ? {
-                  ...item,
-                  quantity: item.quantity + quantity,
-                  subTotal: item.price * (item.quantity + quantity),
-                }
-              : item)
+        return prevCart.map((item) =>
+          item.id == product.id
+            ? {
+                ...item,
+                quantity: item.quantity + quantity,
+                subTotal: item.price * (item.quantity + quantity),
+              }
+            : item
         );
       } else {
         return [

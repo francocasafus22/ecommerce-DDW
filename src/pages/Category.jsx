@@ -6,6 +6,7 @@ function Category() {
   const { category } = useParams();
 
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProductsByCategory();
@@ -19,11 +20,17 @@ function Category() {
         (product) => product.category == category
       );
       setProducts(dataFiltered);
+      setLoading(false);
     }
   }
-
+  if (loading)
+    return (
+      <p className="min-h-screen flex justify-center items-center text-gray-100 text-4xl">
+        Cargando...
+      </p>
+    );
   return (
-    <div>
+    <div className="pt-25 bg-gray-700">
       {products.length > 0 && (
         <ProductList
           products={products}

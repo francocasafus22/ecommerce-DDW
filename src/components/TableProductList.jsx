@@ -1,17 +1,18 @@
 import { Check, Eye, Trash, View, EyeClosed, Edit } from "lucide-react";
-import { useEffect, useState } from "react";
+
+import useProducts from "../hooks/useProducts";
 
 function TableProductList() {
-  const [products, setProducts] = useState();
+  const { products, isLoading, error } = useProducts();
 
-  useEffect(() => {
-    pedirProductos();
-  }, []);
+  if (isLoading) {
+    return (
+      <div className="text-gray-100 text-center text-4xl">Cargando...</div>
+    );
+  }
 
-  async function pedirProductos() {
-    const res = await fetch(`https://fakestoreapi.com/products`);
-    const data = await res.json(); // <--- convertir a JSON
-    setProducts(data);
+  if (error) {
+    return <div>error: {error}</div>;
   }
 
   return (

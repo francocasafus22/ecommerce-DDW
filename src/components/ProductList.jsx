@@ -18,12 +18,18 @@ function ProductList({ products, title, description }) {
   }
 
   return (
-    <div className="bg-gray-700 min-h-screen px-4 pb-12  pt-17 md:pt-25">
+    <div className={`bg-gray-700 min-h-screen max-w-7xl px-5 pb-12`}>
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-emerald-400 text-center text-5xl font-bold pt-5">
-          {title}
-        </h1>
-        <p className="text-gray-300 text-center mb-5 text-xl">{description}</p>
+        {{ title, description } && (
+          <>
+            <h1 className="text-emerald-400 text-center text-5xl font-bold ">
+              {title}
+            </h1>
+            <p className="text-gray-300 text-center mb-5 text-xl">
+              {description}
+            </p>
+          </>
+        )}
 
         <div className="flex items-center w-full max-w-md mx-auto mb-5 gap-2">
           <Search size={24} className="text-gray-300" />
