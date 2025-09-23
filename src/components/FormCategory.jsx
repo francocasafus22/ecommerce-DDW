@@ -1,19 +1,17 @@
 import { useState } from "react";
 import FormInput from "./FormInput";
 import { useNavigate } from "react-router-dom";
-import { DollarSign, Image, PencilLine } from "lucide-react";
-import useCategories from "../hooks/useCategories";
+import { Image, PencilLine, CommandIcon } from "lucide-react";
 
-function FormProduct() {
+function FormCategory() {
   const [formData, setFormData] = useState({
-    title: "",
-    category: "",
-    image: "",
-    price: "",
+    name: "",
     description: "",
+    image: "",
+    status: true,
+    href: "",
   });
 
-  const { categories, isLoading, error } = useCategories();
   const navigate = useNavigate();
 
   function navigateToHome() {
@@ -24,21 +22,15 @@ function FormProduct() {
     e.preventDefault();
 
     // Validación simple
-    if (!formData.title || !formData.category || !formData.price) {
+    if (!formData.name || !formData.description || !formData.href) {
       alert("Faltan campos obligatorios");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/products", {
+      const response = await fetch("http://localhost:3000/api/categories", {
         method: "POST",
-        body: JSON.stringify({
-          title: formData.title,
-          category: formData.category, // enviamos el nombre
-          image: formData.image,
-          price: formData.price,
-          description: formData.description,
-        }),
+        body: JSON.stringify(formData),
         headers: {
           "Content-Type": "application/json",
         },
@@ -58,18 +50,18 @@ function FormProduct() {
     <div className="flex flex-col justify-center bg-gray-700 px-3">
       <div className="rounded-2xl bg-gray-900 w-full mx-auto p-10 max-w-md md:max-w-xl">
         <h1 className="text-center text-2xl font-bold text-emerald-400">
-          Create Product
+          Create Category
         </h1>
 
         <form onSubmit={saveProduct} className="flex flex-col w-full space-y-5">
           <FormInput
             icon={<PencilLine size={18} />}
-            labelText={"Title"}
+            labelText={"Name"}
             inputType={"text"}
-            placeholder={"Producto"}
-            value={formData.title}
+            placeholder={"Categoria"}
+            value={formData.name}
             onChangeFn={(e) =>
-              setFormData({ ...formData, title: e.target.value })
+              setFormData({ ...formData, name: e.target.value })
             }
           />
 
@@ -84,40 +76,6 @@ function FormProduct() {
             }
           />
 
-          <select
-            name="category"
-            id="category"
-            value={formData.category}
-            onChange={(e) =>
-              setFormData({ ...formData, category: e.target.value })
-            }
-            className="bg-gray-700 text-white p-2 rounded-md mt-3"
-          >
-            <option value="">Select category</option>
-            {isLoading ? (
-              <option disabled>Cargando categorías...</option>
-            ) : error ? (
-              <option disabled>Error al cargar categorías</option>
-            ) : (
-              categories.map((category) => (
-                <option value={category.name} key={category._id}>
-                  {category.name}
-                </option>
-              ))
-            )}
-          </select>
-
-          <FormInput
-            icon={<DollarSign size={18} />}
-            labelText={"Price"}
-            inputType={"number"}
-            placeholder={"99.99"}
-            value={formData.price}
-            onChangeFn={(e) =>
-              setFormData({ ...formData, price: e.target.value })
-            }
-          />
-
           <FormInput
             icon={<Image size={18} />}
             labelText={"Image"}
@@ -126,6 +84,17 @@ function FormProduct() {
             value={formData.image}
             onChangeFn={(e) =>
               setFormData({ ...formData, image: e.target.value })
+            }
+          />
+
+          <FormInput
+            icon={<CommandIcon size={18} />}
+            labelText={"href"}
+            inputType={"text"}
+            placeholder={"href de la categoria"}
+            value={formData.href}
+            onChangeFn={(e) =>
+              setFormData({ ...formData, href: e.target.value })
             }
           />
 
@@ -151,4 +120,4 @@ function FormProduct() {
   );
 }
 
-export default FormProduct;
+export default FormCategory;

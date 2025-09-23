@@ -8,7 +8,7 @@ function Detalle() {
   const { addProductCart } = useCart();
 
   async function getProduct(id) {
-    const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+    const response = await fetch(`http://localhost:3000/api/products/${id}`);
     const product = await response.json();
     return product;
   }
@@ -26,7 +26,12 @@ function Detalle() {
   return (
     <div className="pt-17 bg-gray-700 min-h-screen text-gray-100">
       <h1 className="text-4xl">{product.title}</h1>
-
+      <img
+        src={product.image}
+        alt={product.title}
+        className=" h-[350px] object-contain rounded-xl"
+      />
+      <p>{product.description}</p>
       {product && (
         <>
           <p>{product.price}</p>

@@ -7,9 +7,9 @@ function ProductCard({ product }) {
   });
 
   return (
-    <div className="bg-gray-900 rounded-xl shadow-2xl hover: transform-content hover:scale-105 transition-transform duration-250">
+    <div className="bg-gray-900 rounded-xl shadow-2xl hover:transform-content hover:scale-105 transition-transform duration-250">
       <Link
-        to={"/product/" + product.id}
+        to={"/product/" + product._id}
         className="flex flex-col items-center text-center"
       >
         <img
@@ -25,10 +25,10 @@ function ProductCard({ product }) {
             {"$" + product.price}
           </p>
           <p className="text-gray-300 text-sm">
-            {"Rating: " + product.rating.rate}
+            {"Rating: " + product.rating?.rate || 0}
           </p>
           <p className="text-gray-300 text-sm mb-5">
-            {"Reseñas: " + product.rating.count}
+            {"Reseñas: " + product.rating?.count || 0}
           </p>
         </div>
       </Link>

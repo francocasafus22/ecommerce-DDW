@@ -11,6 +11,11 @@ const tabs = [
     label: "Product List",
     icon: ShoppingBasket,
   },
+  {
+    id: 3,
+    label: "Create Category",
+    icon: ShoppingBasket,
+  },
 ];
 
 function Tabs({ activeTab, setActiveTab }) {

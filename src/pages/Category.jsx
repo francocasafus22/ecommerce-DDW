@@ -14,12 +14,12 @@ function Category() {
 
   async function fetchProductsByCategory() {
     if (category) {
-      const response = await fetch(`https://fakestoreapi.com/products`);
-      const data = await response.json();
-      const dataFiltered = data.filter(
-        (product) => product.category == category
+      const response = await fetch(
+        `http://localhost:3000/api/products/category/${category}`
       );
-      setProducts(dataFiltered);
+      const data = await response.json();
+
+      setProducts(data);
       setLoading(false);
     }
   }
@@ -30,12 +30,12 @@ function Category() {
       </p>
     );
   return (
-    <div className="pt-25 bg-gray-700">
+    <div className="pt-25 bg-gray-700 flex justify-center items-center">
       {products.length > 0 && (
         <ProductList
           products={products}
           title={"Productos"}
-          description={products[0].category}
+          description={products[0]?.category?.name || "Sin categoría"}
         />
       )}
     </div>

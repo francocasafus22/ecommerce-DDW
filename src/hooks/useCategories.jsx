@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 
-function useProducts() {
-  const [products, setProducts] = useState();
+function useCategories() {
+  const [categories, setCategories] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  async function fetchProducts() {
+  async function fetchCategories() {
     try {
-      const response = await fetch(`http://localhost:3000/api/products`);
+      const response = await fetch(`http://localhost:3000/api/categories`);
       if (!response.ok) {
         throw new Error("error en la petición");
       }
-      const data = await response.json();
-      setProducts(data);
+      const responseJson = await response.json();
+      console.log(responseJson);
+
+      setCategories(responseJson);
       setIsLoading(false);
     } catch (error) {
       setError(error.message);
@@ -22,10 +24,10 @@ function useProducts() {
   }
 
   useEffect(() => {
-    fetchProducts();
+    fetchCategories();
   }, []);
 
-  return { products, isLoading, error };
+  return { categories, isLoading, error };
 }
 
-export default useProducts;
+export default useCategories;
