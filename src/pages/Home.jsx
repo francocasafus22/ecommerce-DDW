@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
 import useProducts from "../hooks/useProducts";
 import ProductList from "../components/ProductList";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const { products, isLoading, error } = useProducts();
-  const [Loading, setLoading] = useState(false);
+  const { data: products, isLoading, isError, error } = useProducts();
+
   const navigate = useNavigate();
 
   const handleClick = (url) => {
-    setLoading(true);
     navigate(url);
   };
 
@@ -28,9 +26,9 @@ function Home() {
           </span>
           <button
             className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-2 md:px-5 py-2 rounded-md"
-            onClick={() => handleClick("/category/men's%20clothing")}
+            onClick={() => handleClick("/category/mens-clothing")}
           >
-            {Loading ? "Cargando..." : "Ir al detalle"}
+            Comprar ahora
           </button>
         </div>
 
@@ -44,7 +42,10 @@ function Home() {
           <span className="block  font-extrabold text-green-400 mb-5 text-3xl">
             Desde $4999
           </span>
-          <button className="bg-green-500 hover:bg-green-600 text-gray-900 font-semibold px-2 sm:px-5 py-2 rounded-md ">
+          <button
+            className="bg-green-500 hover:bg-green-600 text-gray-900 font-semibold px-2 sm:px-5 py-2 rounded-md"
+            onClick={() => handleClick("/category/electronics")}
+          >
             Comprar ahora
           </button>
         </div>
@@ -56,6 +57,8 @@ function Home() {
       ) : (
         <ProductList products={products} />
       )}
+
+      {error && <p>{JSON.stringify(error)}</p>}
     </div>
   );
 }

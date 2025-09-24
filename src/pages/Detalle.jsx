@@ -1,28 +1,18 @@
 import { useParams } from "react-router-dom";
 import useCart from "../hooks/useCart";
-import { useEffect, useState } from "react";
+import useProducts from "../hooks/useProducts";
 
 function Detalle() {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
+
+  const { data: product, isLoading, isError, error } = useProducts(id);
+
   const { addProductCart } = useCart();
 
-  async function getProduct(id) {
-    const response = await fetch(`http://localhost:3000/api/products/${id}`);
-    const product = await response.json();
-    return product;
-  }
+  if (isLoading) return <p>Cargando...</p>;
 
-  useEffect(() => {
-    getProduct(id).then((data) => setProduct(data));
-  }, [id]);
+  if (isError) return <p>Error: {error.message}</p>;
 
-  if (!product)
-    return (
-      <div className="min-h-screen flex justify-center items-center  bg-gray-700  text-gray-100">
-        <p className="">Cargando...</p>
-      </div>
-    );
   return (
     <div className="pt-17 bg-gray-700 min-h-screen text-gray-100">
       <h1 className="text-4xl">{product.title}</h1>

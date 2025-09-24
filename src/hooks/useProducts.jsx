@@ -1,31 +1,11 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts, getProductByID } from "../api/product.js";
 
-function useProducts() {
-  const [products, setProducts] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  async function fetchProducts() {
-    try {
-      const response = await fetch(`http://localhost:3000/api/products`);
-      if (!response.ok) {
-        throw new Error("error en la petición");
-      }
-      const data = await response.json();
-      setProducts(data);
-      setIsLoading(false);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  return { products, isLoading, error };
+function useProducts(id = null) {
+  return useQuery({
+    queryKey: id ? ["product", id] : ["products"],
+    queryFn: () => (id ? getProductByID(id) : getProducts()),
+  });
 }
 
 export default useProducts;

@@ -3,8 +3,24 @@ import FormInput from "./FormInput";
 import { useNavigate } from "react-router-dom";
 import { DollarSign, Image, PencilLine } from "lucide-react";
 import useCategories from "../hooks/useCategories";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createProduct } from "../api/product";
 
 function FormProduct() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { mutate: createProductMutate, isLoading: isSaving } = useMutation({
+    mutationFn: createProduct,
+    onSuccess: () => {
+      // Refrescar la lista de productos automáticamente
+      queryClient.invalidateQueries(["products"]);
+      navigate("/");
+    },
+    onError: (error) => {
+      console.log("Error creando producto: ", error);
+    },
+  });
+
   const [formData, setFormData] = useState({
     title: "",
     category: "",
@@ -14,7 +30,6 @@ function FormProduct() {
   });
 
   const { categories, isLoading, error } = useCategories();
-  const navigate = useNavigate();
 
   function navigateToHome() {
     navigate(-1);
@@ -29,29 +44,7 @@ function FormProduct() {
       return;
     }
 
-    try {
-      const response = await fetch("http://localhost:3000/api/products", {
-        method: "POST",
-        body: JSON.stringify({
-          title: formData.title,
-          category: formData.category, // enviamos el nombre
-          image: formData.image,
-          price: formData.price,
-          description: formData.description,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        navigateToHome();
-      } else {
-        console.error("Error al crear producto");
-      }
-    } catch (err) {
-      console.error("Error de conexión:", err);
-    }
+    createProductMutate(formData);
   }
 
   return (
