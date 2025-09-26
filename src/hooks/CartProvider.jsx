@@ -13,7 +13,6 @@ function CartProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart)); // Pasar de objeto JS a JSON
-    console.log(cart);
   }, [cart]);
 
   function addProductCart({ product, quantity }) {

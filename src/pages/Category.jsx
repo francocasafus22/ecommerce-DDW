@@ -1,44 +1,95 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import ProductList from "../components/ProductList";
+import useProducts from "../hooks/useProducts";
+import { Search } from "lucide-react";
 
 function Category() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { category } = useParams();
+  const search = searchParams.get("search");
+  const p = Number(searchParams.get("p") || 1);
+  const [textInput, setTextInput] = useState(search);
 
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: result,
+    isLoading,
+    isError,
+    error,
+  } = useProducts(null, p, category, search);
 
-  useEffect(() => {
-    fetchProductsByCategory();
-  }, [category]);
-
-  async function fetchProductsByCategory() {
-    if (category) {
-      const response = await fetch(
-        `http://localhost:3000/api/products/category/${category}`
-      );
-      const data = await response.json();
-
-      setProducts(data);
-      setLoading(false);
+  function handlePagination(newPage) {
+    if (newPage > 0) {
+      setSearchParams({ search, p: newPage });
     }
   }
-  if (loading)
-    return (
-      <p className="min-h-screen flex justify-center items-center text-gray-100 text-4xl">
-        Cargando...
-      </p>
-    );
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchParams({ search: textInput, p: 1 });
+  };
+
   return (
-    <div className="pt-25 bg-gray-700 flex justify-center items-center">
-      {products.length > 0 && (
-        <ProductList
-          products={products}
-          title={"Productos"}
-          description={products[0]?.category?.name || "Sin categoría"}
-        />
+    <>
+      {isLoading ? (
+        <p className="min-h-screen flex justify-center items-center">
+          Cargando...
+        </p>
+      ) : (
+        <div className="bg-gray-700 min-h-screen flex  flex-col justify-center items-center pt-22">
+          <h1 className="text-emerald-400 text-center text-5xl font-bold mt-10">
+            {result.products[0].category.name}
+          </h1>
+
+          <form
+            onSubmit={handleSearch}
+            className="flex items-center w-full max-w-md mx-auto mb-5 mt-10 px-5 gap-2"
+          >
+            <Search size={24} className="text-gray-300" />
+            <input
+              type="text"
+              placeholder="Buscar..."
+              value={textInput}
+              onChange={(e) => setTextInput(e.target.value)}
+              className="flex-1 bg-gray-800 text-white px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400"
+            />
+            <button
+              type="submit"
+              className="bg-emerald-400 px-3 py-2 rounded-md text-gray-900 font-semibold"
+            >
+              Buscar
+            </button>
+          </form>
+          {isLoading ? (
+            <p className="text-gray-100 text-4xl">Cargando...</p>
+          ) : (
+            <>
+              <ProductList products={result.products} />
+              <div className="w-full flex items-center justify-center gap-3 text-white">
+                <button
+                  onClick={() => handlePagination(p - 1)}
+                  className="hover:text-emerald-800 disabled:text-gray-500 "
+                  disabled={p === 1}
+                >
+                  {p - 1}
+                </button>
+                <button className=" text-emerald-400 ">{result.page}</button>
+                <button
+                  onClick={() => handlePagination(p + 1)}
+                  className="hover:text-emerald-800 disabled:text-gray-500 "
+                  disabled={p >= result.maxPage}
+                >
+                  {p + 1}
+                </button>
+              </div>
+              <div className="text-center text-white mb-2">
+                <p>Total: {result.totalDocuments}</p>
+              </div>
+            </>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

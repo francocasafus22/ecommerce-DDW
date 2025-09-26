@@ -2,10 +2,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
-  useEffect(() => {
-    console.log(product);
-  });
-
   return (
     <div className="bg-gray-900 rounded-xl shadow-2xl hover:transform-content hover:scale-105 transition-transform duration-250">
       <Link

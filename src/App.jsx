@@ -15,10 +15,6 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const cartItem = 3;
 
-  useEffect(() => {
-    console.log(isLogin);
-  }, [isLogin]);
-
   function login() {
     setIsLogin(true);
   }

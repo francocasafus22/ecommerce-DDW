@@ -1,21 +1,14 @@
-import { Search } from "lucide-react";
+import { Search, ArrowRight, ArrowLeft } from "lucide-react";
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
+import { useNavigate } from "react-router-dom";
 
 function ProductList({ products, title, description }) {
-  const [textInput, SetTextInput] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   useEffect(() => {
-    const productsFilter = products.filter((product) =>
-      product.title.toLowerCase().includes(textInput.toLowerCase())
-    );
-    setFilteredProducts(productsFilter);
-  }, [products, textInput]);
-
-  function handleInput(e) {
-    SetTextInput(e.target.value);
-  }
+    setFilteredProducts(products);
+  }, [products]);
 
   return (
     <div className={`bg-gray-700 min-h-screen max-w-7xl px-5 pb-12`}>
@@ -30,16 +23,6 @@ function ProductList({ products, title, description }) {
             </p>
           </>
         )}
-
-        <div className="flex items-center w-full max-w-md mx-auto mb-5 gap-2">
-          <Search size={24} className="text-gray-300" />
-          <input
-            type="text"
-            placeholder="Buscar..."
-            className="flex-1 bg-gray-800 text-white px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400"
-            onChange={handleInput}
-          />
-        </div>
 
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
