@@ -3,9 +3,13 @@ import { Check, Eye, Trash, View, EyeClosed, Edit } from "lucide-react";
 import useProducts from "../hooks/useProducts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteProduct } from "../api/product";
+import { useSearchParams } from "react-router-dom";
 
 function TableProductList() {
-  const { data: products, isLoading, isError, error } = useProducts();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const p = Number(searchParams.get("p")) || 1;
+  const { data: products, isLoading, isError, error } = useProducts(null, p);
+  console.log(products);
 
   const queryClient = useQueryClient();
 
@@ -18,6 +22,13 @@ function TableProductList() {
       queryClient.invalidateQueries(["products"]);
     },
   });
+
+  function handlePagination(newPage) {
+    if (newPage > 0) {
+      setSearchParams({ p: newPage });
+    }
+  }
+
   if (isLoading) return <p>Cargando...</p>;
   if (isError) return <p>Error: {error.message}</p>;
   return (
@@ -33,7 +44,7 @@ function TableProductList() {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 text-gray-200">
-          {products?.map((product) => (
+          {products.products?.map((product) => (
             <tr
               key={product?._id}
               className="hover:bg-emerald-400 hover:text-gray-700 transition"
@@ -64,6 +75,26 @@ function TableProductList() {
           ))}
         </tbody>
       </table>
+      <div className="w-full flex items-center justify-center gap-3 text-white">
+        <button
+          onClick={() => handlePagination(p - 1)}
+          className="hover:text-emerald-800 disabled:text-gray-500 "
+          disabled={p === 1}
+        >
+          {p - 1}
+        </button>
+        <button className=" text-emerald-400 ">{products.page}</button>
+        <button
+          onClick={() => handlePagination(p + 1)}
+          className="hover:text-emerald-800 disabled:text-gray-500 "
+          disabled={p >= products.maxPage}
+        >
+          {p + 1}
+        </button>
+      </div>
+      <div className="text-center text-white mb-2">
+        <p>Total: {products.totalDocuments}</p>
+      </div>
     </div>
   );
 }
